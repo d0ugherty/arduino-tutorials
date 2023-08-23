@@ -32,4 +32,5 @@
 *.app
 
 #etc
+/*/build-uno
 .vscode
