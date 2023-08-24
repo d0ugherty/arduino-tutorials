@@ -1,9 +1,15 @@
 int switch_pin = 2;     //connect switch to digitial pin #2
-int led_pin = 12;
+int led_pin12 = 12;
+int led_pin11 = 11;
 int volt;
+int count;
+
+void flash (int pin);
+
 void setup() {
-    //Serial.begin(9600);
-    pinMode(led_pin, OUTPUT);
+    Serial.begin(9600);
+    pinMode(led_pin12, OUTPUT);
+    pinMode(led_pin11, OUTPUT);
     pinMode(switch_pin, INPUT);
 }
 
@@ -11,13 +17,16 @@ void setup() {
 void loop(){
     volt = digitalRead(switch_pin);
     if(volt == LOW) {
-        digitalWrite(led_pin, HIGH);
-        delay(100);
-        digitalWrite(led_pin, LOW);
-        delay(100);
+        flash(led_pin12);
     } else if(volt == HIGH) {
-     //   Serial.println("Button pressed");
-        digitalWrite(led_pin, LOW);
+        digitalWrite(led_pin11, HIGH);
+        digitalWrite(led_pin12, LOW);
     }
 }
 
+void flash(int pin){
+    digitalWrite(pin, HIGH);
+    delay(100);
+    digitalWrite(pin, LOW);
+    delay(100);
+}
