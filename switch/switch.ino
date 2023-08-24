@@ -5,6 +5,7 @@ int button_state;
 int led_state;
 
 void switch_leds();
+bool bounce();
 
 void setup() {
     Serial.begin(9600);
@@ -28,7 +29,7 @@ void setup() {
 
 void loop(){
     val = digitalRead(switch_pin);              // read input value
-        if(val == LOW && val != button_state) { // check for change in button state 
+        if(val == LOW && val != button_state && !bounce()) { // check for change in button state 
             //turn the LEDs either on or off
             digitalWrite(led_one, ~led_state);
             digitalWrite(led_two, ~led_state);
@@ -37,4 +38,16 @@ void loop(){
             led_state = ~led_state;
         }
     button_state = val; // temporarily store button state
+}
+
+/**
+* By reading two values with a delay, we can detect if the spring
+* inside the button switch has bounced or not, helping give more accurate
+* input. 
+**/
+bool bounce(){
+    int val1 = digitalRead(switch_pin);
+    delay(10);
+    int val2 = digitalRead(switch_pin);
+    return val1 != val2;
 }
