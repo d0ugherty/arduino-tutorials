@@ -21,7 +21,7 @@ void setup() {
     pinMode(led_four, OUTPUT);
 
     pinMode(switch_pin, INPUT);
-    led_state = 0;
+    led_state = LOW;
     button_state = digitalRead(switch_pin);     // init button state as input value
 }
 
@@ -29,22 +29,12 @@ void setup() {
 void loop(){
     val = digitalRead(switch_pin);              // read input value
         if(val == LOW && val != button_state) { // check for change in button state 
-            if(led_state == 0) {
-                led_state = 1;
-                Serial.println("button pressed");
-                // turn LEDs either on or off
-                digitalWrite(led_one, HIGH);
-                digitalWrite(led_two, HIGH);
-                digitalWrite(led_three, HIGH);
-                digitalWrite(led_four, HIGH);
-            } else {
-                led_state = 0;
-                digitalWrite(led_one, LOW);
-                digitalWrite(led_two, LOW);
-                digitalWrite(led_three, LOW);
-                digitalWrite(led_four, LOW);
-            }
+            //turn the LEDs either on or off
+            digitalWrite(led_one, ~led_state);
+            digitalWrite(led_two, ~led_state);
+            digitalWrite(led_three, ~led_state);
+            digitalWrite(led_four, ~led_state);
+            led_state = ~led_state;
         }
-
-   button_state = val; // temporarily store button state
+    button_state = val; // temporarily store button state
 }
