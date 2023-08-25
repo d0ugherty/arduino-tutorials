@@ -33,4 +33,5 @@
 
 #etc
 /*/build-uno
+/*/Makefile
 .vscode
