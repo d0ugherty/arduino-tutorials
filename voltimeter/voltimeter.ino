@@ -16,22 +16,54 @@
  * TO DO: Set this up the 4-digit 7-segment display
 */
 
+
+
+#include "array.h"
+#include "functions.h"
+
 int analog_pin;
 int sensor_value;   // variable to store the value coming from the sensor
 float sensor_voltage; // variable to store the voltage coming from the sensor
 
+void setup_display();
+
 void setup(){
     analog_pin = A0;
+
+    setup_display();
     Serial.begin(9600);
 }
 
 void loop() { 
     sensor_value = analogRead(analog_pin);
     sensor_voltage = sensor_value * (5.0 / 1023.0);
+    
+    String volt_str = String(sensor_voltage, 3);
+
 
     Serial.print("Voltage: ");
     Serial.println(sensor_voltage);
-    
+   
+    print_display(volt_str, 200);
+
     delay(1000);
+}
+
+void setup_display(){
+    pinMode(pinA, OUTPUT);
+    pinMode(pinB, OUTPUT);
+    pinMode(pinC, OUTPUT);
+    pinMode(pinD, OUTPUT);
+    pinMode(pinE, OUTPUT);
+    pinMode(pinF, OUTPUT);
+    pinMode(pinG, OUTPUT);
+    
+    pinMode(pinH, OUTPUT);
+
+    pinMode(pinD1, OUTPUT);
+    pinMode(pinD2, OUTPUT);
+    pinMode(pinD3, OUTPUT);
+    pinMode(pinD4, OUTPUT);
+
 }
 
