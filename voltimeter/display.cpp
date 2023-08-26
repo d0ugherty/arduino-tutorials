@@ -2,25 +2,20 @@
  * Helper functions for the 7-segment digital  display
  *
  */
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
+#include "display.h"
 
-#include <Arduino.h>
-#include "array.h"
-#include "pins.h"
-
-
-bool mode = common_cathode;
+namespace display {
+bool mode = common_anode;
 
 void Reset(){
-    digitalWrite(pinA, mode);
-    digitalWrite(pinB, mode);
-    digitalWrite(pinC, mode);
-    digitalWrite(pinD, mode);
-    digitalWrite(pinE, mode);
-    digitalWrite(pinF, mode);
-    digitalWrite(pinG, mode);
-    digitalWrite(pinH, mode);
+    digitalWrite(pinA, !mode);
+    digitalWrite(pinB, !mode);
+    digitalWrite(pinC, !mode);
+    digitalWrite(pinD, !mode);
+    digitalWrite(pinE, !mode);
+    digitalWrite(pinF, !mode);
+    digitalWrite(pinG, !mode);
+    digitalWrite(pinH, !mode);
 
     for(byte i = 0; i < chars_count; i++) {
         digitalWrite(seg[i], mode);
@@ -28,7 +23,7 @@ void Reset(){
 }
 
 void print_digit(char digit, int digit_port){
-    //Reset();
+    Reset();
     
     int char_idx = -1;
     // search for character in array
@@ -95,21 +90,20 @@ void print_display(String str, int delay) {
             }
 
 
-
+        
             print_digit(char1,pinD1);
- 
-           // delay(2);
+            millis();             
 
             print_digit(char2,pinD2);
- 
+            millis();
             //delay(2);
 
             print_digit(char3,pinD3);
- 
+            millis();
             //delay(2);
 
             print_digit(char4,pinD4);
- 
+            millis();
             //delay(2);
  
         }
@@ -125,13 +119,13 @@ void print_display(String str, int delay) {
 
                 print_digit(char1,pinD1);
                // delay(2);
-                
+               millis(); 
                 print_digit(char2,pinD2);
                // delay(2);
-
+                millis();
                 print_digit(char3,pinD3);
               //  delay(2);
-
+                millis();
                 print_digit(char4,pinD4);
               //  delay(2);
             }
@@ -149,4 +143,4 @@ void print_display(String str, int delay) {
     }
 }  
 
-#endif
+}

@@ -16,10 +16,10 @@
  * TO DO: Set this up the 4-digit 7-segment display
 */
 
-
-
 #include "array.h"
-#include "functions.h"
+#include "display.h"
+
+using namespace display;
 
 int analog_pin;
 int sensor_value;   // variable to store the value coming from the sensor
@@ -44,9 +44,9 @@ void loop() {
     Serial.print("Voltage: ");
     Serial.println(sensor_voltage);
    
-    print_display(volt_str, 200);
+    print_display(volt_str, 1000);
 
-    delay(1000);
+    //delay(200);
 }
 
 void setup_display(){
