@@ -39,14 +39,10 @@ void loop() {
     sensor_voltage = sensor_value * (5.0 / 1023.0);
     
     String volt_str = String(sensor_voltage, 3);
-
-
-    Serial.print("Voltage: ");
-    Serial.println(sensor_voltage);
    
-    print_display(volt_str, 1000);
-
-    //delay(200);
+    // print to the 4-digit LED display
+    display::print_display(volt_str, 10);
+    display::Reset();
 }
 
 void setup_display(){

@@ -5,7 +5,8 @@
 #include "display.h"
 
 namespace display {
-bool mode = common_anode;
+bool mode = common_cathode;
+unsigned long current_ms;
 
 void Reset(){
     digitalWrite(pinA, !mode);
@@ -50,61 +51,48 @@ void print_digit(char digit, int digit_port){
 
 
 void print_display(String str, int delay) {
+    unsigned long previous_ms = 0;
     char char1 = str.charAt(0);
     char char2 = str.charAt(1);
     char char3 = str.charAt(2);
     char char4 = str.charAt(3);
 
-    char char1_num = 0;
-    char char2_num = 0;
-    char char3_num = 0;
-    char char4_num = 0;
-
+   
     int length = str.length();
 
     if(length < 5) {
         for(int ti = 0 ; ti <= (delay / 8) ; ti++){
             
-            if(1 > length) {
-                char1 = ' ';
-            } else {
-                char1 = str.charAt(0);
+            (1 > length) ? char1 = ' ' : char1 = str.charAt(0);
+            (2 > length) ? char2 = ' ' : char2 = str.charAt(1);
+            (3 > length) ? char3 = ' ' : char3 = str.charAt(2);
+            (4 > length) ? char4 = ' ' : char4 = str.charAt(3);
+
+            current_ms = millis();
+            if(current_ms - previous_ms >= delay) { 
+                print_digit(char1,pinD1);
             }
 
-            if(2 > length) {
-                char2 = ' ';
-            } else {
-                char2 = str.charAt(1);
-            }
-            
-            if(3 > length) {
-                char3 = ' ';
-            } else {
-                char3 = str.charAt(2);
+            previous_ms = current_ms;
+
+            current_ms = millis();
+            if(current_ms - previous_ms >= delay) { 
+                print_digit(char2, pinD2);
             }
 
-            if(4 > length) {
-                char4 = ' ';
-            } else {
-                char4 = str.charAt(3);
+            previous_ms = current_ms;
+
+            current_ms = millis();
+            if(current_ms - previous_ms >= delay) { 
+                print_digit(char3, pinD3);
             }
 
+            previous_ms = current_ms;
 
-        
-            print_digit(char1,pinD1);
-            millis();             
-
-            print_digit(char2,pinD2);
-            millis();
-            //delay(2);
-
-            print_digit(char3,pinD3);
-            millis();
-            //delay(2);
-
-            print_digit(char4,pinD4);
-            millis();
-            //delay(2);
+            current_ms = millis();
+            if(current_ms - previous_ms >= delay) { 
+                print_digit(char4, pinD4);
+            }
  
         }
 
@@ -116,29 +104,40 @@ void print_display(String str, int delay) {
          * */
         for(int t = 0 ; t <= length; t++){
             for(int ti = 0 ; ti <= (delay / 8) ; ti++){
+            
+                current_ms = millis();
+                if(current_ms - previous_ms >= delay) { 
+                    print_digit(char1,pinD1);
+                }
 
-                print_digit(char1,pinD1);
-               // delay(2);
-               millis(); 
-                print_digit(char2,pinD2);
-               // delay(2);
-                millis();
-                print_digit(char3,pinD3);
-              //  delay(2);
-                millis();
-                print_digit(char4,pinD4);
-              //  delay(2);
+                previous_ms = current_ms;
+
+                current_ms = millis();
+                if(current_ms - previous_ms >= delay) { 
+                    print_digit(char2, pinD2);
+                }
+
+                previous_ms = current_ms;
+
+                current_ms = millis();
+                if(current_ms - previous_ms >= delay) { 
+                    print_digit(char3, pinD3);
+                }
+
+                previous_ms = current_ms;
+
+                current_ms = millis();
+                if(current_ms - previous_ms >= delay) { 
+                    print_digit(char4, pinD4);
+                }
+
             }
 
             // empty display when movement finishes
-             if(t + 1 > length) char1 = ' ';
-             else char1 = str.charAt(t);
-             if((t + 2) > length) char2 = ' ';
-             else char2 = str.charAt(t + 1);
-             if((t + 3) > length) char3 = ' ';
-             else char3 = str.charAt(t + 2);
-             if((t + 4) > length) char4 = ' ';
-             else char4 = str.charAt(t + 3);
+            (t + 1 > length) ? char1 = ' ' : char1 = str.charAt(t);
+            (t + 2 > length) ? char2 = ' ' : char2 = str.charAt(t);
+            (t + 3 > length) ? char3 = ' ' : char3 = str.charAt(t);
+            (t + 4 > length) ? char4 = ' ' : char4 = str.charAt(t);
         }
     }
 }  
