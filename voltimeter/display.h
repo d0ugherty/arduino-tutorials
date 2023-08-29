@@ -12,6 +12,7 @@ namespace display {
     void Reset();
     void print_digit(char digit, int digit_port);
     void print_display(String str, int delay); 
+    
 }
 
 #endif

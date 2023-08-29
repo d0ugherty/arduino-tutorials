@@ -5,11 +5,9 @@
 
 #include "pins.h"
 
-const int chars_count = 37;
-
-extern byte digits[]; // digit pins
+extern const byte digits[]; // digit pins
                             
-extern byte seg[];
+extern const byte seg[];
 
 extern byte Char[37][9];
 

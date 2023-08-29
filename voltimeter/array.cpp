@@ -2,12 +2,11 @@
 #include <stdint.h>
 
 #include "array.h"
+#include "pins.h"
 
-//const int chars_count = 37; // chars in array
-
-byte digits[] = { pinD1,pinD2,pinD3,pinD4}; // digit pins
+const byte digits[] = {pinD1, pinD2, pinD3, pinD4}; // digit pins
                             
-byte seg[] = {pinA,pinB,pinC,pinD,pinE,pinF,pinG};
+const byte seg[] = {pinA, pinB, pinC, pinD, pinE, pinF, pinG, pinH};
 
 byte Char[37][9] = { 
            {1,1,1,1,1,1,0,0,'0'},//0
@@ -47,4 +46,5 @@ byte Char[37][9] = {
            {1,1,1,1,0,0,0,0,']'},//]
            {1,1,0,0,1,0,1,0,'?'},//?
            {0,0,0,0,0,0,0,0,' '}//blank
-           };
+        };
+        

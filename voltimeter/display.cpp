@@ -6,6 +6,9 @@
 
 namespace display {
 bool mode = common_cathode;
+
+//const int nbr_places = 4; //4 segments in the LED display
+const int chars_count = 37;
 unsigned long current_ms;
 
 void Reset(){
@@ -18,10 +21,11 @@ void Reset(){
     digitalWrite(pinG, !mode);
     digitalWrite(pinH, !mode);
 
-    for(byte i = 0; i < chars_count; i++) {
+   for(byte i = 0; i < chars_count; i++) {
         digitalWrite(seg[i], mode);
     }
 }
+
 
 void print_digit(char digit, int digit_port){
     Reset();
@@ -36,7 +40,7 @@ void print_digit(char digit, int digit_port){
     // turn off the pin if char is not found
     
     if(char_idx == -1) {
-        digitalWrite(pinG, !mode);
+       digitalWrite(digit_port, !mode);
     } else {
         // print char if found
         for(int i = 0; i <= 7; i++) {
@@ -57,17 +61,23 @@ void print_display(String str, int delay) {
     char char3 = str.charAt(2);
     char char4 = str.charAt(3);
 
+    Serial.println(char1);
+    Serial.println(char2);
+    Serial.println(char3);
+    Serial.println(char4);
    
     int length = str.length();
 
     if(length < 5) {
-        for(int ti = 0 ; ti <= (delay / 8) ; ti++){
+                //for(int ti = 0 ; ti <= (delay / 8) ; ti++){
             
             (1 > length) ? char1 = ' ' : char1 = str.charAt(0);
             (2 > length) ? char2 = ' ' : char2 = str.charAt(1);
             (3 > length) ? char3 = ' ' : char3 = str.charAt(2);
             (4 > length) ? char4 = ' ' : char4 = str.charAt(3);
-
+            
+            previous_ms = 0; 
+            
             current_ms = millis();
             if(current_ms - previous_ms >= delay) { 
                 print_digit(char1,pinD1);
@@ -94,7 +104,7 @@ void print_display(String str, int delay) {
                 print_digit(char4, pinD4);
             }
  
-        }
+      //  }
 
     } else {
         /**
@@ -102,8 +112,8 @@ void print_display(String str, int delay) {
          *  make the string move to show the full string 
          *   because the diplay fits 4 digits only)
          * */
-        for(int t = 0 ; t <= length; t++){
-            for(int ti = 0 ; ti <= (delay / 8) ; ti++){
+         for(int t = 0 ; t <= length; t++){
+            for(int ti = 0 ; ti <= 8 ; ti++){
             
                 current_ms = millis();
                 if(current_ms - previous_ms >= delay) { 

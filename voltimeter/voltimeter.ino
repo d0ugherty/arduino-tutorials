@@ -24,6 +24,7 @@ using namespace display;
 int analog_pin;
 int sensor_value;   // variable to store the value coming from the sensor
 float sensor_voltage; // variable to store the voltage coming from the sensor
+char volt_buffer[16];
 
 void setup_display();
 
@@ -38,10 +39,15 @@ void loop() {
     sensor_value = analogRead(analog_pin);
     sensor_voltage = sensor_value * (5.0 / 1023.0);
     
-    String volt_str = String(sensor_voltage, 3);
-   
+    String volt_str = dtostrf(sensor_voltage,4,2,volt_buffer);
+    Serial.print("length: ");
+    Serial.println(volt_str.length());
     // print to the 4-digit LED display
+    //display::print_display(sensor_voltage);
+    //display::print_display("LOL", 10);
+    Serial.println(volt_str);
     display::print_display(volt_str, 10);
+    delay(1000);
     display::Reset();
 }
 
