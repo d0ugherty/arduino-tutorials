@@ -28,7 +28,7 @@ void Reset(){
 
 
 void print_digit(char digit, int digit_port){
-    Reset();
+    //Reset();
     
     int char_idx = -1;
     // search for character in array
@@ -55,101 +55,29 @@ void print_digit(char digit, int digit_port){
 
 
 void print_display(String str, int delay) {
-    unsigned long previous_ms = 0;
-    char char1 = str.charAt(0);
-    char char2 = str.charAt(1);
-    char char3 = str.charAt(2);
-    char char4 = str.charAt(3);
-
-    Serial.println(char1);
-    Serial.println(char2);
-    Serial.println(char3);
-    Serial.println(char4);
-   
     int length = str.length();
+    unsigned long previous_ms = millis();
+    int currentDigit = 0;
+    int currentState = 0;
 
-    if(length < 5) {
-                //for(int ti = 0 ; ti <= (delay / 8) ; ti++){
-            
-            (1 > length) ? char1 = ' ' : char1 = str.charAt(0);
-            (2 > length) ? char2 = ' ' : char2 = str.charAt(1);
-            (3 > length) ? char3 = ' ' : char3 = str.charAt(2);
-            (4 > length) ? char4 = ' ' : char4 = str.charAt(3);
-            
-            previous_ms = 0; 
-            
-            current_ms = millis();
-            if(current_ms - previous_ms >= delay) { 
-                print_digit(char1,pinD1);
-            }
+    while (currentDigit < length) {
+        unsigned long current_ms = millis();
 
+        if (currentState == 0 && current_ms - previous_ms >= delay) {
             previous_ms = current_ms;
+            char currentChar = str.charAt(currentDigit);
+            print_digit(currentChar, pinD1 + currentDigit); // Assuming pinD1 is for the first digit
+            currentState = 1;
+            //currentDigit++;
+        }
 
-            current_ms = millis();
-            if(current_ms - previous_ms >= delay) { 
-                print_digit(char2, pinD2);
-            }
-
+        if (currentState == 1 && current_ms - previous_ms >= delay) {
             previous_ms = current_ms;
-
-            current_ms = millis();
-            if(current_ms - previous_ms >= delay) { 
-                print_digit(char3, pinD3);
-            }
-
-            previous_ms = current_ms;
-
-            current_ms = millis();
-            if(current_ms - previous_ms >= delay) { 
-                print_digit(char4, pinD4);
-            }
- 
-      //  }
-
-    } else {
-        /**
-         *   if the string is more than 4 digits
-         *  make the string move to show the full string 
-         *   because the diplay fits 4 digits only)
-         * */
-         for(int t = 0 ; t <= length; t++){
-            for(int ti = 0 ; ti <= 8 ; ti++){
-            
-                current_ms = millis();
-                if(current_ms - previous_ms >= delay) { 
-                    print_digit(char1,pinD1);
-                }
-
-                previous_ms = current_ms;
-
-                current_ms = millis();
-                if(current_ms - previous_ms >= delay) { 
-                    print_digit(char2, pinD2);
-                }
-
-                previous_ms = current_ms;
-
-                current_ms = millis();
-                if(current_ms - previous_ms >= delay) { 
-                    print_digit(char3, pinD3);
-                }
-
-                previous_ms = current_ms;
-
-                current_ms = millis();
-                if(current_ms - previous_ms >= delay) { 
-                    print_digit(char4, pinD4);
-                }
-
-            }
-
-            // empty display when movement finishes
-            (t + 1 > length) ? char1 = ' ' : char1 = str.charAt(t);
-            (t + 2 > length) ? char2 = ' ' : char2 = str.charAt(t);
-            (t + 3 > length) ? char3 = ' ' : char3 = str.charAt(t);
-            (t + 4 > length) ? char4 = ' ' : char4 = str.charAt(t);
+            Reset(); // Replace this with the function to turn off the current digit display
+            currentState = 0;
+            currentDigit++;
         }
     }
-}  
+}
 
 }

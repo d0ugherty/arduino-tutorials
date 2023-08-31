@@ -48,7 +48,7 @@ void loop() {
     Serial.println(volt_str);
     display::print_display(volt_str, 10);
     delay(1000);
-    display::Reset();
+    //display::Reset();
 }
 
 void setup_display(){
