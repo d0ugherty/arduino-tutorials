@@ -2,6 +2,7 @@
 
 const unsigned char digits[10] = {
 //   ABCDEFGH
+    0b1111110, // 0
     0b0110000, // 1
     0b1101101, // 2
     0b1111001, // 3

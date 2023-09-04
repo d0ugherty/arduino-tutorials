@@ -1,0 +1,35 @@
+#include "display.h"
+
+#include <Arduino.h>
+
+namespace display {
+
+    void reset() {
+        for(int i = 0; i < 8; i++){
+            digitalWrite(seg_pins[i], common_anode);
+        }
+    }
+
+    void display_digit(int number) {
+        unsigned int curr_ms;
+        unsigned int prev_ms;
+        unsigned char num_char = seg_pins[number];
+        
+        prev_ms = millis();
+        for(int i = 0; i <= 7; i--){
+            prev_ms = millis();
+            bool bit = (num_char >> i) & 1;
+            unsigned int pin_idx = 7 - i;
+        //    curr_ms = millis(); 
+                digitalWrite(seg_pins[i],bit);
+        
+        }
+        curr_ms = millis();
+        //if(curr_ms - prev_ms > 5) {
+         reset();
+        //}
+    }
+
+    void display_number(int number) {
+    }
+}
