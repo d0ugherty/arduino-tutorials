@@ -5,7 +5,15 @@ int sensor_value;
 int voltage_int;
 float sensor_voltage;
 
-void setup_display();
+//void setup_display();
+void setup_display(){
+   for(int i = 0; i <= 7; i++) {
+       pinMode(seg_pins[i], OUTPUT);
+   }
+   for(int i = 1; i <= 1; i++) {
+       pinMode(gnd_pins[i], OUTPUT);
+   }
+}
 
 void setup() {
     setup_display(); 
@@ -20,16 +28,6 @@ void loop() {
     
     //put function call to the display the number here
     display::display_digit(voltage_int); 
-    Serial.println(voltage_int);
-   // delay(500);
 }
 
-void setup_display(){
-   for(int i = 0; i <= 7; i++) {
-       pinMode(seg_pins[i], OUTPUT);
-   }
-   for(int i = 1; i <= 1; i++) {
-       pinMode(gnd_pins[i], OUTPUT);
-   }
-}
 

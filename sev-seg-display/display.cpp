@@ -9,7 +9,12 @@ namespace display {
             digitalWrite(seg_pins[i], common_cathode);
         }
     }
-
+    
+    /**
+     * Reads the individual bits of the char
+     * and sets the LED segment on or off depending
+     * on the value of the bit being read.
+     */
     void display_digit(int number) {
         unsigned char num_char = digits[number];
         
